@@ -1485,6 +1485,7 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
       // _BorderContainer's x and is independent of label's x.
       switch (textDirection) {
         case TextDirection.rtl:
+<<<<<<< HEAD
           double offsetToPrefixIcon = 0.0;
           if (prefixIcon != null && !decoration.alignLabelWithHint) {
             offsetToPrefixIcon = material3 ? _boxSize(prefixIcon).width - left : 0;
@@ -1492,12 +1493,18 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
           decoration.borderGap.start = lerpDouble(labelX + _boxSize(label).width + offsetToPrefixIcon,
             _boxSize(container).width / 2.0 + floatWidth / 2.0,
             floatAlign);
+=======
+          decoration.borderGap.start = lerpDouble(labelX + _boxSize(label).width,
+              _boxSize(container).width / 2.0 + floatWidth / 2.0,
+              floatAlign);
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
 
           break;
         case TextDirection.ltr:
           // The value of _InputBorderGap.start is relative to the origin of the
           // _BorderContainer which is inset by the icon's width. Although, when
           // floating label is centered, it's already relative to _BorderContainer.
+<<<<<<< HEAD
           double offsetToPrefixIcon = 0.0;
           if (prefixIcon != null && !decoration.alignLabelWithHint) {
             offsetToPrefixIcon = material3 ? (-_boxSize(prefixIcon).width + left) : 0;
@@ -1505,6 +1512,11 @@ class _RenderDecoration extends RenderBox with SlottedContainerRenderObjectMixin
           decoration.borderGap.start = lerpDouble(labelX - _boxSize(icon).width + offsetToPrefixIcon,
             _boxSize(container).width / 2.0 - floatWidth / 2.0,
             floatAlign);
+=======
+          decoration.borderGap.start = lerpDouble(labelX - _boxSize(icon).width,
+              _boxSize(container).width / 2.0 - floatWidth / 2.0,
+              floatAlign);
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
           break;
       }
       decoration.borderGap.extent = label!.size.width * _kFinalLabelScale;
@@ -1991,6 +2003,16 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     if (isFocused) {
       return themeData.colorScheme.primary;
     }
+<<<<<<< HEAD
+=======
+    return themeData.hintColor;
+  }
+
+  Color _getDefaultBorderColor(ThemeData themeData) {
+    if (isFocused) {
+      return themeData.colorScheme.primary;
+    }
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     if (decoration.filled!) {
       return themeData.hintColor;
     }
@@ -2002,12 +2024,33 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     return enabledColor;
   }
 
+<<<<<<< HEAD
   Color _getFillColor(ThemeData themeData, InputDecorationTheme defaults) {
+=======
+  Color _getFillColor(ThemeData themeData) {
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     if (decoration.filled != true) { // filled == null same as filled == false
       return Colors.transparent;
     }
     if (decoration.fillColor != null) {
       return MaterialStateProperty.resolveAs(decoration.fillColor!, materialState);
+<<<<<<< HEAD
+=======
+    }
+
+    // dark theme: 10% white (enabled), 5% white (disabled)
+    // light theme: 4% black (enabled), 2% black (disabled)
+    const Color darkEnabled = Color(0x1AFFFFFF);
+    const Color darkDisabled = Color(0x0DFFFFFF);
+    const Color lightEnabled = Color(0x0A000000);
+    const Color lightDisabled = Color(0x05000000);
+
+    switch (themeData.brightness) {
+      case Brightness.dark:
+        return decoration.enabled ? darkEnabled : darkDisabled;
+      case Brightness.light:
+        return decoration.enabled ? lightEnabled : lightDisabled;
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     }
     return MaterialStateProperty.resolveAs(defaults.fillColor!, materialState);
   }
@@ -2052,8 +2095,15 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
 
   // The base style for the inline label when they're displayed "inline",
   // i.e. when they appear in place of the empty text field.
+<<<<<<< HEAD
   TextStyle _getInlineLabelStyle(ThemeData themeData, InputDecorationTheme defaults) {
     final TextStyle defaultStyle = MaterialStateProperty.resolveAs(defaults.labelStyle!, materialState);
+=======
+  TextStyle _getInlineLabelStyle(ThemeData themeData) {
+    final TextStyle defaultStyle = TextStyle(
+      color: decoration.enabled ? themeData.hintColor : themeData.disabledColor,
+    );
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
 
     final TextStyle? style = MaterialStateProperty.resolveAs(decoration.labelStyle, materialState)
       ?? MaterialStateProperty.resolveAs(themeData.inputDecorationTheme.labelStyle, materialState);
@@ -2067,8 +2117,15 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
 
   // The base style for the inline hint when they're displayed "inline",
   // i.e. when they appear in place of the empty text field.
+<<<<<<< HEAD
   TextStyle _getInlineHintStyle(ThemeData themeData, InputDecorationTheme defaults) {
     final TextStyle defaultStyle = MaterialStateProperty.resolveAs(defaults.hintStyle!, materialState);
+=======
+  TextStyle _getInlineHintStyle(ThemeData themeData) {
+    final TextStyle defaultStyle = TextStyle(
+      color: decoration.enabled ? themeData.hintColor : themeData.disabledColor,
+    );
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
 
     final TextStyle? style = MaterialStateProperty.resolveAs(decoration.hintStyle, materialState)
       ?? MaterialStateProperty.resolveAs(themeData.inputDecorationTheme.hintStyle, materialState);
@@ -2079,10 +2136,21 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
       .merge(style);
   }
 
+<<<<<<< HEAD
   TextStyle _getFloatingLabelStyle(ThemeData themeData, InputDecorationTheme defaults) {
     TextStyle defaultTextStyle = MaterialStateProperty.resolveAs(defaults.floatingLabelStyle!, materialState);
     if (decoration.errorText != null && decoration.errorStyle?.color != null) {
       defaultTextStyle = defaultTextStyle.copyWith(color: decoration.errorStyle?.color);
+=======
+  TextStyle _getFloatingLabelStyle(ThemeData themeData) {
+    TextStyle getFallbackTextStyle() {
+      final Color color = decoration.errorText != null
+        ? decoration.errorStyle?.color ?? themeData.errorColor
+        : _getActiveColor(themeData);
+
+      return TextStyle(color: decoration.enabled ? color : themeData.disabledColor)
+        .merge(decoration.floatingLabelStyle ?? decoration.labelStyle);
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     }
     defaultTextStyle = defaultTextStyle.merge(decoration.floatingLabelStyle ?? decoration.labelStyle);
 
@@ -2096,6 +2164,7 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
       .merge(style);
   }
 
+<<<<<<< HEAD
   TextStyle _getHelperStyle(ThemeData themeData, InputDecorationTheme defaults) {
     return MaterialStateProperty.resolveAs(defaults.helperStyle!, materialState)
       .merge(MaterialStateProperty.resolveAs(decoration.helperStyle, materialState));
@@ -2104,6 +2173,16 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
   TextStyle _getErrorStyle(ThemeData themeData, InputDecorationTheme defaults) {
     return MaterialStateProperty.resolveAs(defaults.errorStyle!, materialState)
       .merge(decoration.errorStyle);
+=======
+  TextStyle _getHelperStyle(ThemeData themeData) {
+    final Color color = decoration.enabled ? themeData.hintColor : Colors.transparent;
+    return themeData.textTheme.caption!.copyWith(color: color).merge(MaterialStateProperty.resolveAs(decoration.helperStyle, materialState));
+  }
+
+  TextStyle _getErrorStyle(ThemeData themeData) {
+    final Color color = decoration.enabled ? themeData.errorColor : Colors.transparent;
+    return themeData.textTheme.caption!.copyWith(color: color).merge(decoration.errorStyle);
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
   }
 
   Set<MaterialState> get materialState {
@@ -2115,8 +2194,12 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     };
   }
 
+<<<<<<< HEAD
 
   InputBorder _getDefaultBorder(ThemeData themeData, InputDecorationTheme defaults) {
+=======
+  InputBorder _getDefaultBorder(ThemeData themeData) {
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     final InputBorder border =  MaterialStateProperty.resolveAs(decoration.border, materialState)
       ?? const UnderlineInputBorder();
 
@@ -2128,6 +2211,7 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
       return border;
     }
 
+<<<<<<< HEAD
     if (themeData.useMaterial3) {
       if (decoration.filled!) {
         return border.copyWith(
@@ -2148,6 +2232,24 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
             : isFocused ? 2.0 : 1.0,
         ),
       );
+=======
+    final Color borderColor;
+    if (decoration.enabled || isFocused) {
+      borderColor = decoration.errorText == null
+        ? _getDefaultBorderColor(themeData)
+        : themeData.errorColor;
+    } else {
+      borderColor = ((decoration.filled ?? false) && !(decoration.border?.isOutline ?? false))
+        ? Colors.transparent
+        : themeData.disabledColor;
+    }
+
+    final double borderWeight;
+    if (decoration.isCollapsed || decoration.border == InputBorder.none || !decoration.enabled) {
+      borderWeight = 0.0;
+    } else {
+      borderWeight = isFocused ? 2.0 : 1.0;
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     }
   }
 
@@ -2160,7 +2262,11 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     final TextStyle labelStyle = _getInlineLabelStyle(themeData, defaults);
     final TextBaseline textBaseline = labelStyle.textBaseline!;
 
+<<<<<<< HEAD
     final TextStyle hintStyle = _getInlineHintStyle(themeData, defaults);
+=======
+    final TextStyle hintStyle = _getInlineHintStyle(themeData);
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
     final String? hintText = decoration.hintText;
     final Widget? hint = hintText == null ? null : AnimatedOpacity(
       opacity: (isEmpty && !_hasInlineLabel) ? 1.0 : 0.0,
@@ -2171,7 +2277,11 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
         hintText,
         style: hintStyle,
         textDirection: decoration.hintTextDirection,
+<<<<<<< HEAD
         overflow: hintStyle.overflow ?? TextOverflow.ellipsis,
+=======
+        overflow: TextOverflow.ellipsis,
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
         textAlign: textAlign,
         maxLines: decoration.hintMaxLines,
       ),
@@ -2239,20 +2349,50 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     final double iconSize = decorationIsDense ? 18.0 : 24.0;
 
     final Widget? icon = decoration.icon == null ? null :
+<<<<<<< HEAD
       MouseRegion(
         cursor: SystemMouseCursors.basic,
         child: Padding(
           padding: const EdgeInsetsDirectional.only(end: 16.0),
+=======
+      Padding(
+        padding: const EdgeInsetsDirectional.only(end: 16.0),
+        child: IconTheme.merge(
+          data: IconThemeData(
+            color: _getIconColor(themeData),
+            size: iconSize,
+          ),
+          child: decoration.icon!,
+        ),
+      );
+
+    final Widget? prefixIcon = decoration.prefixIcon == null ? null :
+      Center(
+        widthFactor: 1.0,
+        heightFactor: 1.0,
+        child: ConstrainedBox(
+          constraints: decoration.prefixIconConstraints ?? themeData.visualDensity.effectiveConstraints(
+            const BoxConstraints(
+              minWidth: kMinInteractiveDimension,
+              minHeight: kMinInteractiveDimension,
+            ),
+          ),
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
           child: IconTheme.merge(
             data: IconThemeData(
               color: _getIconColor(themeData, defaults),
               size: iconSize,
             ),
+<<<<<<< HEAD
             child: decoration.icon!,
+=======
+            child: decoration.prefixIcon!,
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
           ),
         ),
       );
 
+<<<<<<< HEAD
     final Widget? prefixIcon = decoration.prefixIcon == null ? null :
       Center(
         widthFactor: 1.0,
@@ -2273,6 +2413,17 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
                 size: iconSize,
               ),
               child: decoration.prefixIcon!,
+=======
+    final Widget? suffixIcon = decoration.suffixIcon == null ? null :
+      Center(
+        widthFactor: 1.0,
+        heightFactor: 1.0,
+        child: ConstrainedBox(
+          constraints: decoration.suffixIconConstraints ?? themeData.visualDensity.effectiveConstraints(
+            const BoxConstraints(
+              minWidth: kMinInteractiveDimension,
+              minHeight: kMinInteractiveDimension,
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
             ),
           ),
         ),
@@ -2299,6 +2450,10 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
               ),
               child: decoration.suffixIcon!,
             ),
+<<<<<<< HEAD
+=======
+            child: decoration.suffixIcon!,
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
           ),
         ),
       );
@@ -2306,10 +2461,17 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
     final Widget helperError = _HelperError(
       textAlign: textAlign,
       helperText: decoration.helperText,
+<<<<<<< HEAD
       helperStyle: _getHelperStyle(themeData, defaults),
       helperMaxLines: decoration.helperMaxLines,
       errorText: decoration.errorText,
       errorStyle: _getErrorStyle(themeData, defaults),
+=======
+      helperStyle: _getHelperStyle(themeData),
+      helperMaxLines: decoration.helperMaxLines,
+      errorText: decoration.errorText,
+      errorStyle: _getErrorStyle(themeData),
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
       errorMaxLines: decoration.errorMaxLines,
     );
 
@@ -2322,7 +2484,11 @@ class _InputDecoratorState extends State<InputDecorator> with TickerProviderStat
         liveRegion: isFocused,
         child: Text(
           decoration.counterText!,
+<<<<<<< HEAD
           style: _getHelperStyle(themeData, defaults).merge(MaterialStateProperty.resolveAs(decoration.counterStyle, materialState)),
+=======
+          style: _getHelperStyle(themeData).merge(MaterialStateProperty.resolveAs(decoration.counterStyle, materialState)),
+>>>>>>> e99c9c7cd9f6c0b2f8ae6e3ebfd585239f5568f4
           overflow: TextOverflow.ellipsis,
           semanticsLabel: decoration.semanticCounterText,
         ),
